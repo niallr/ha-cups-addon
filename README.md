@@ -6,13 +6,13 @@ A CUPS (Common UNIX Printing System) server with a variety of included drivers, 
 
 # Considerations
 
-**SSL must be disabled within the CUPS portal to prevent 502 Bad Gateway errors.** This has already been set within the default cupsd.conf.
+* **SSL must be disabled within the CUPS portal to prevent 502 Bad Gateway errors.** This has already been set within the default cupsd.conf.
 
-The CUPS portal can be viewed at localhost:631 (e.g. homeassistant:631). HA Ingress support is currently in progress, so expect the sidebar panel functionality to not work (blank pages, etc).
+* The CUPS portal can be viewed at localhost:631 (e.g. homeassistant:631). HA Ingress support is currently in progress, so expect the sidebar panel functionality to not work (blank pages, etc).
 
-Logins are disabled from the local network. The web UI from within Home Assistant is automatically authenticated.
+* Logins are disabled from the local network. The web UI from within Home Assistant is automatically authenticated.
 
-USB printers should be connected to the host device prior to starting this addon. If disconnected/connected during run, simply restart the addon.
+* USB printers should be connected to the host device prior to starting this addon. If disconnected/connected during runtime, simply restart the addon.
 
 # Acknowledgements
 
