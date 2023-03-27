@@ -25,7 +25,7 @@
     "ingress": true,
     "map": ["ssl"],
     "options": {
-        "ssl": true,
+        "ssl": false, # SSL must be disabled within the CUPS portal to prevent 502 Bad Gateway errors
         "certfile": "fullchain.pem",
         "keyfile": "privkey.pem",
         "require_ssl": true
