@@ -1,0 +1,40 @@
+{
+    "name": "CUPS Print Server",
+    "version": "1.0.0",
+    "slug": "cups",
+    "description": "The CUPS (Common UNIX Printing System) print server package with drivers included and Avahi",
+    "url": "https://github.com/niallr/ha-cups-addon",
+    "arch": [
+        "aarch64",
+        "armhf",
+        "armv7",
+        "amd64",
+        "i386"
+    ],
+    "init": true,
+    "homeassistant_api": true,
+	"usb": true,
+    "ports": {
+        "631/tcp": 631,
+        "631/udp": 631
+    },
+    "ports_description": {
+        "631/tcp": "Used by other devices on the local network to post print jobs to this server (TCP)",
+        "631/udp": "Used by other devices on the local network to post print jobs to this server (UDP)"
+    },
+    "ingress": true,
+    "map": ["ssl"],
+    "options": {
+        "ssl": true,
+        "certfile": "fullchain.pem",
+        "keyfile": "privkey.pem",
+        "require_ssl": true
+    },
+    "schema": {
+        "ssl": "bool",
+        "cafile": "str?",
+        "certfile": "str",
+        "keyfile": "str",
+        "require_ssl": "bool"
+    }
+}
