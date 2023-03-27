@@ -22,7 +22,7 @@ BrowseLocalProtocols dnssd
 
 # Default authentication type, when authentication is required...
 DefaultAuthType Basic
-DefaultEncryption Required
+DefaultEncryption IfRequested
 
 # Host header validation
 # {{.hostname}}.local {{.internal}} {{.external}}
