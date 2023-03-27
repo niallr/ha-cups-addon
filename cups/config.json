@@ -28,7 +28,7 @@
         "ssl": false,
         "certfile": "fullchain.pem",
         "keyfile": "privkey.pem",
-        "require_ssl": true
+        "require_ssl": false
     },
     "schema": {
         "ssl": "bool",
