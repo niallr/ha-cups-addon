@@ -16,7 +16,7 @@ RUN apt-get update \
         hpijs-ppds \
         hp-ppd  \
         hplip \
-		printer-driver-brlaser \
+	printer-driver-brlaser \
         printer-driver-foo2zjs \
         gnupg2 \
         lsb-release \
