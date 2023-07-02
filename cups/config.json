@@ -11,7 +11,7 @@
         "amd64",
         "i386"
     ],
-    "init": true,
+    "init": false,
     "homeassistant_api": true,
     "usb": true,
     "panel_icon": "mdi:printer",
