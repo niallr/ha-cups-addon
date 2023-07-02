@@ -29,7 +29,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY rootfs /
-RUN RUN ["chmod", "+x", "/etc/cont-init.d/dbus-setup"]
+#RUN ["chmod", "+x", "/etc/cont-init.d/dbus-setup"]
 
 RUN ["chmod", "+x", "/run.sh"]
 EXPOSE 631
