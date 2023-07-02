@@ -3,8 +3,8 @@ FROM $BUILD_FROM
 
 LABEL io.hass.version="1" io.hass.type="addon" io.hass.arch="armhf|aarch64|i386|amd64"
 
-RUN apt-get clean -y
-RUN rm -rf /var/lib/apt/lists/*
+RUN timedatectl set-ntp off
+RUN timedatectl set-ntp on
 RUN apt-get update -y
 RUN apt-get install -y --no-install-recommends \
         cups \
