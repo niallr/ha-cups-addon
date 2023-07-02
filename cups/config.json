@@ -13,7 +13,10 @@
     ],
     "init": true,
     "homeassistant_api": true,
-	"usb": true,
+    "usb": true,
+    "panel_icon": "mdi:printer",
+    "icon": "icon.png",
+    "logo": "icon.png",
     "ports": {
         "631/tcp": 631,
         "631/udp": 631
