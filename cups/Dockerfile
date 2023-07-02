@@ -3,8 +3,8 @@ FROM $BUILD_FROM
 
 LABEL io.hass.version="1" io.hass.type="addon" io.hass.arch="armhf|aarch64|i386|amd64"
 
-RUN apt-get update -y \
-    && apt-get install -y --no-install-recommends \
+RUN apt-get update -y
+RUN apt-get install -y --no-install-recommends \
         cups \
         avahi-daemon \
         libnss-mdns \
@@ -21,9 +21,9 @@ RUN apt-get update -y \
         nano \
         samba \
         bash-completion \
-        nginx \
-    && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/*
+        nginx
+RUN apt-get clean -y
+RUN rm -rf /var/lib/apt/lists/*
 
 COPY rootfs /
 
