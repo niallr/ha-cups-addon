@@ -3,27 +3,25 @@ FROM $BUILD_FROM
 
 LABEL io.hass.version="1" io.hass.type="addon" io.hass.arch="armhf|aarch64|i386|amd64"
 
-RUN timedatectl set-ntp off
-RUN timedatectl set-ntp on
-RUN apt-get update -y
-RUN apt-get install -y --no-install-recommends \
-        cups \
-        avahi-daemon \
-        libnss-mdns \
-        dbus \
-        colord \
-        printer-driver-all-enforce \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+	cups \
+	avahi-daemon \
+	libnss-mdns \
+	dbus \
+	colord \
+	printer-driver-all-enforce \
 	printer-driver-brlaser \
-        openprinting-ppds \
-        hpijs-ppds \
-        hp-ppd  \
-        hplip \
-        gnupg2 \
-        lsb-release \
-        nano \
-        samba \
-        bash-completion \
-        nginx
+	openprinting-ppds \
+	hpijs-ppds \
+	hp-ppd  \
+	hplip \
+	gnupg2 \
+	lsb-release \
+	nano \
+	samba \
+	bash-completion \
+	nginx
 RUN apt-get clean -y
 RUN rm -rf /var/lib/apt/lists/*
 
