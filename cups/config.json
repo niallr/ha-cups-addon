@@ -25,7 +25,7 @@
         "631/tcp": "Used by other devices on the local network to post print jobs to this server (TCP)",
         "631/udp": "Used by other devices on the local network to post print jobs to this server (UDP)"
     },
-    "ingress": true,
+    "ingress": false,
     "map": ["ssl"],
     "options": {
         "ssl": false,
