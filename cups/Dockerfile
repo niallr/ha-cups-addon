@@ -3,7 +3,7 @@ FROM $BUILD_FROM
 
 LABEL io.hass.version="1" io.hass.type="addon" io.hass.arch="armhf|aarch64|i386|amd64"
 
-RUN apt-get -y update \
+RUN apt-get update -y \
     && apt-get install -y --no-install-recommends \
         cups \
         avahi-daemon \
