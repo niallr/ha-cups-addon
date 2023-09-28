@@ -1,5 +1,7 @@
 #!/usr/bin/with-contenv bashio
 
+ulimit -n 1048576
+
 # Create links for certificates with CUPS' expected filenames
 bashio::config.require.ssl
 
