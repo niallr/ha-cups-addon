@@ -55,7 +55,7 @@ publish-domain=no
 #publish-a-on-ipv6=no
 
 [reflector]
-#enable-reflector=no
+enable-reflector=yes
 #reflect-ipv=no
 
 [rlimits]
