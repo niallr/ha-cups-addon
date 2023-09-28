@@ -1,5 +1,5 @@
 name: CUPS Print Server
-version: "1.0.2"
+version: "1.0.3"
 slug: cups
 description: The CUPS (Common UNIX Printing System) print server package with drivers included and Avahi
 url: https://github.com/niallr/ha-cups-addon
