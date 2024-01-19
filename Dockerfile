@@ -5,6 +5,7 @@ LABEL io.hass.version="1.0" io.hass.type="addon" io.hass.arch="armhf|aarch64|i38
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# printer-driver-brlaser specifically called out for Brother printer support
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         sudo \
@@ -14,14 +15,12 @@ RUN apt-get update \
         libnss-mdns \
         dbus \
         colord \
-        printer-driver-all \
-        printer-driver-gutenprint \
+        printer-driver-all-enforce \
         openprinting-ppds \
         hpijs-ppds \
         hp-ppd  \
         hplip \
         printer-driver-brlaser \
-        printer-driver-foo2zjs \
         cups-pdf \
         gnupg2 \
         lsb-release \
@@ -29,6 +28,7 @@ RUN apt-get update \
         samba \
         bash-completion \
         procps \
+        whois \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
