@@ -1,10 +1,8 @@
-[![Builder](https://github.com/peternicholls/ha-cups-addon/actions/workflows/builder.yml/badge.svg)](https://github.com/peternicholls/ha-cups-addon/actions/workflows/builder.yml)
-[![GitHub Release](https://img.shields.io/github/v/release/peternicholls/ha-cups-addon)](https://github.com/peternicholls/ha-cups-addon/releases/latest)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/peternicholls/ha-cups-addon/blob/main/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/niallr/ha-cups-addon/blob/main/LICENSE)
 
 # CUPS Print Server - Home Assistant Addon
 
-[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fpeternicholls%2Fha-cups-addon)
+[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fniallr%2Fha-cups-addon)
 
 ## Description
 
@@ -24,7 +22,7 @@ Tested with Home Assistant OS **17.1** and Home Assistant Core **2026.2**.
 
 ## Installation
 
-1. Click the badge above to add this repository to your Home Assistant instance, or manually add `https://github.com/peternicholls/ha-cups-addon` in **Settings → Add-ons → Add-on store → Repositories**.
+1. Click the badge above to add this repository to your Home Assistant instance, or manually add `https://github.com/niallr/ha-cups-addon` in **Settings → Add-ons → Add-on store → Repositories**.
 2. Install the **CUPS Print Server** addon.
 3. Configure the options (see below).
 4. Start the addon.
@@ -61,7 +59,7 @@ Oneshot `up` files should prefer a raw command or an explicit interpreter invoca
 
 ## Acknowledgements
 
-This project was forked from [niallr/ha-cups-addon](https://github.com/niallr/ha-cups-addon) and significantly extended.
+Thank you to [peternicholls](https://github.com/peternicholls) for major contributions.
 
 The original cupsd.conf and Dockerfile were adapted from [lemariva/wifi-cups-server](https://github.com/lemariva/wifi-cups-server).
 
