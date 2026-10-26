@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv bashio
+set -euo pipefail
+
+bashio::log.info "Starting cups-browsed (AirPrint advertisement) from S6"
+
+exec cups-browsed -d

@@ -1,4 +1,2 @@
-#!/usr/bin/env bashio
-
-mkdir -p /var/run/dbus
+/bin/mkdir -p /var/run/dbus
 

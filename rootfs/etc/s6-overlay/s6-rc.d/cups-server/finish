@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv bashio
+set -euo pipefail
+
+/usr/bin/with-contenv /bin/bash /usr/share/cups-state-backup.sh

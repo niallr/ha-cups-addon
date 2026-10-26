@@ -1,12 +1,19 @@
 #!/usr/bin/with-contenv bashio
-
-ulimit -n 1048576
+set -euo pipefail
 
 bashio::log.info "Starting CUPS server from S6"
 
+WAIT_MAX_RETRIES=30
+WAIT_INTERVAL=1
+retries=0
 until [ -e /var/run/avahi-daemon/socket ]; do
-  sleep 1s
+  if [ "$retries" -ge "$WAIT_MAX_RETRIES" ]; then
+    bashio::log.error "Timed out waiting for Avahi socket (/var/run/avahi-daemon/socket); aborting."
+    exit 1
+  fi
+  retries=$((retries + 1))
+  sleep "${WAIT_INTERVAL}s"
 done
 
-cupsd -f
+exec cupsd -f
 

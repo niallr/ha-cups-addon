@@ -1,0 +1,51 @@
+name: Feature Request
+description: Suggest a new feature or improvement
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Got an idea to make the addon better? Describe it below.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or motivation
+      description: What are you trying to do that is currently difficult or impossible?
+      placeholder: "I can't print to my printer because..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: Describe what you'd like to see added or changed.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any workarounds you've tried, or alternative approaches you considered.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Printer driver / support
+        - CUPS configuration
+        - Avahi / AirPrint discovery
+        - Home Assistant integration
+        - CI / build pipeline
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?

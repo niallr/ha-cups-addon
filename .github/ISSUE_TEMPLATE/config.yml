@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Home Assistant Community Forum
+    url: https://community.home-assistant.io
+    about: For general Home Assistant questions and discussions
+  - name: CUPS Documentation
+    url: https://www.cups.org/documentation.html
+    about: Official CUPS documentation for configuration help

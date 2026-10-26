@@ -1,11 +1,18 @@
 #!/usr/bin/with-contenv bashio
-
-ulimit -n 1048576
+set -euo pipefail
 
 bashio::log.info "Starting Avahi daemon from S6"
 
+WAIT_MAX_RETRIES=30
+WAIT_INTERVAL=1
+retries=0
 until [ -e /run/dbus/system_bus_socket ]; do
-  sleep 1s
+  if [ "$retries" -ge "$WAIT_MAX_RETRIES" ]; then
+    bashio::log.error "Timed out waiting for D-Bus socket (/run/dbus/system_bus_socket); aborting."
+    exit 1
+  fi
+  retries=$((retries + 1))
+  sleep "${WAIT_INTERVAL}s"
 done
 
-avahi-daemon
+exec avahi-daemon

@@ -1,8 +1,8 @@
 name: CUPS Print Server
-version: "1.0.5"
+version: "1.0.6"
 slug: cups
 description: The CUPS (Common UNIX Printing System) print server package with drivers included and Avahi
-url: https://github.com/niallr/ha-cups-addon
+url: https://github.com/peternicholls/ha-cups-addon
 arch:
   - aarch64
   - armhf
@@ -17,13 +17,23 @@ panel_icon: mdi:printer
 icon: icon.png
 logo: icon.png
 ports:
-  631/tcp: 631
-  631/udp: 631
+  631/tcp: 631 # TCP: client print job submission
+  631/udp: 631 # UDP: printer browsing/discovery (intentional, do not remove)
 ports_description:
   631/tcp: Used by other devices on the local network to post print jobs to this server (TCP)
   631/udp: Used by other devices on the local network to post print jobs to this server (UDP)
 ingress: true
-ingress_port: 631
+ingress_port: 8099
 map:
   - config:rw
   - ssl
+options:
+  admin_user: print
+  admin_password: print
+  cups_log_level: warn
+  default_paper_size: A4
+schema:
+  admin_user: str
+  admin_password: password
+  cups_log_level: list(warn|info|debug)
+  default_paper_size: list(A4|Letter)

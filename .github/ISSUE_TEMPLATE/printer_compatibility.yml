@@ -1,0 +1,55 @@
+name: Printer Compatibility Report
+description: Report that a printer works (or doesn't) with this addon
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Help build the compatibility list! Whether your printer works perfectly or not at all, this information is useful.
+
+  - type: input
+    id: printer
+    attributes:
+      label: Printer make and model
+      placeholder: "Brother HL-L2350DW"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: status
+    attributes:
+      label: Compatibility status
+      options:
+        - Works out of the box
+        - Works with manual configuration
+        - Partial (describe below)
+        - Does not work
+    validations:
+      required: true
+
+  - type: input
+    id: driver
+    attributes:
+      label: Driver used
+      description: Which driver did CUPS select, or did you add manually?
+      placeholder: "Brother brlaser / HPLIP / gutenprint / etc."
+
+  - type: input
+    id: addon_version
+    attributes:
+      label: Addon version
+      placeholder: "1.0.13"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Configuration steps taken
+      description: What did you do to get it working (or what failed)?
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: PPD file name, connection method (USB/network), etc.

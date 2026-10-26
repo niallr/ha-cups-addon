@@ -3,18 +3,21 @@
 # complete description of this file.
 #
 
-# Log general information in error_log - change "warn" to "debug"
-# for troubleshooting...
-LogLevel warn
+# Log to stdout/stderr so HA captures output
+LogLevel {{.log_level}}
 PageLogFormat
-
-# Specifies the maximum size of the log files before they are rotated.  The value "0" disables log rotation.
+AccessLog /dev/stdout
+ErrorLog /dev/stderr
 MaxLogSize 0
+
+# Default paper size
+DefaultPaperSize {{.paper_size}}
 
 # Default error policy for printers
 ErrorPolicy retry-job
 
 # Only listen for connections from the local machine.
+# Port must match EXPOSE in Dockerfile and ports in config.yaml
 Port 631
 Listen /run/cups/cups.sock
 
@@ -24,13 +27,12 @@ BrowseLocalProtocols all
 
 # Default authentication type, when authentication is required...
 DefaultAuthType Basic
-DefaultEncryption IfRequested
+DefaultEncryption Never
 
-# Host header validation
-# {{.hostname}}.local {{.internal}} {{.external}}
-#ServerAlias *
+# Accept any Host header so HA ingress proxy requests are not rejected
+ServerAlias *
 
-#ServerName {{.hostname}}
+ServerName {{.hostname}}
 
 # Web interface setting...
 WebInterface Yes
@@ -41,13 +43,13 @@ IdleExitTimeout 60
 # Restrict access to the server...
 <Location />
   Order allow,deny
-  Allow @LOCAL
+  Allow all
 </Location>
 
 # Restrict access to the admin pages...
 <Location /admin>
   Order allow,deny
-  Allow @LOCAL
+  Allow all
 </Location>
 
 # Restrict access to configuration files...

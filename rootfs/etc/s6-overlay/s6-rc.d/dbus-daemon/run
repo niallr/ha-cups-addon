@@ -1,7 +1,6 @@
 #!/usr/bin/with-contenv bashio
-
-ulimit -n 1048576
+set -euo pipefail
 
 bashio::log.info "Starting DBUS daemon from S6"
 
-dbus-daemon --system --nofork
+exec dbus-daemon --system --nofork

@@ -1,24 +1,68 @@
-# CUPS Home Assistant Addon (x86 Compatible)
+[![Builder](https://github.com/peternicholls/ha-cups-addon/actions/workflows/builder.yml/badge.svg)](https://github.com/peternicholls/ha-cups-addon/actions/workflows/builder.yml)
+[![GitHub Release](https://img.shields.io/github/v/release/peternicholls/ha-cups-addon)](https://github.com/peternicholls/ha-cups-addon/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/peternicholls/ha-cups-addon/blob/main/LICENSE)
 
-[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fniallr%2Fha-cups-addon)
+# CUPS Print Server - Home Assistant Addon
 
-# Description
+[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fpeternicholls%2Fha-cups-addon)
 
-A CUPS (Common UNIX Printing System) server with a variety of included drivers, USB support, support for the Home Assistant installation's TLS certificate, and mDNS broadcasting enabled. This was created primarily to support Home Assistant installations on devices with x86 architecture, such as AMD/Intel-based thin clients. The installed driver packages focus on HP and Brother printer support. Avahi has been configured to support AirPrint via reflector mode.
+## Description
 
-This has been tested with Home Assistant Core **2023.9**.
+A CUPS (Common UNIX Printing System) print server addon for Home Assistant, with printer drivers, USB support, AirPrint discovery, and a configurable web UI. Supports amd64, aarch64, armv7, armhf, and i386.
 
-# Considerations
+Tested with Home Assistant OS **17.1** and Home Assistant Core **2026.2**.
 
-* **SSL must be disabled within the CUPS portal to prevent 502 Bad Gateway errors.** This has already been set within the default cupsd.conf.
+## Features
 
-* The CUPS portal can be viewed at http://localhost:631 (e.g. http://homeassistant:631). HA Ingress support is patchy due to non-SSL, so expect the sidebar panel functionality to not work (blank pages, etc).
+- **AirPrint support** - Printers are automatically discoverable by iOS and macOS devices via cups-browsed and Avahi mDNS
+- **Sidebar landing page** - Clicking the addon in the HA sidebar shows a purpose-built page with a direct link to the CUPS web UI, a shortcut to addon settings, and useful documentation links
+- **Configurable options** - Admin username, password, log level, and default paper size are all configurable from the addon settings
+- **USB printer support** - Connect USB printers to the host before starting the addon
+- **Driver packages** - Includes HP (HPLIP), Brother, Gutenprint, and other common printer drivers via cups-filters
+- **Runtime user creation** - Admin user is created at startup from the addon configuration, not baked into the image
+- **Logging to HA** - CUPS logs are written to stdout and visible in the Home Assistant log viewer
 
-* The default admin login credentials are username = "print" and password = "print". This can be altered within the Dockerfile as required.
+## Installation
 
-* USB printers should be connected to the host device prior to starting this addon. If disconnected/connected during runtime, simply restart the addon.
+1. Click the badge above to add this repository to your Home Assistant instance, or manually add `https://github.com/peternicholls/ha-cups-addon` in **Settings → Add-ons → Add-on store → Repositories**.
+2. Install the **CUPS Print Server** addon.
+3. Configure the options (see below).
+4. Start the addon.
+5. Open the web UI via the sidebar to add printers.
 
-# Acknowledgements
+## Configuration
 
-cupsd.conf and Dockerfile modified from https://github.com/lemariva/wifi-cups-server
-Some of the Avahi and D-Bus code is modified from https://github.com/marthoc/docker-homeseer
+| Option | Default | Description |
+|--------|---------|-------------|
+| `admin_user` | `print` | CUPS admin username |
+| `admin_password` | `print` | CUPS admin password |
+| `cups_log_level` | `warn` | Log verbosity: `warn`, `info`, or `debug` |
+| `default_paper_size` | `A4` | Default paper size: `A4` or `Letter` |
+
+It is recommended to change the default admin password before exposing the addon.
+
+## Notes
+
+- **USB printers** should be connected to the host before starting the addon. Reconnecting during runtime requires an addon restart.
+- The **HA sidebar** shows a landing page rather than the CUPS interface directly — this is intentional. CUPS's authentication and redirect behaviour is not compatible with HA's ingress proxy, so the landing page provides a one-click link to open CUPS at `http://[your-ha-host]:631` instead.
+- The **CUPS web UI** is accessible directly at `http://homeassistant.local:631` (or your HA host's IP). You must be on the same local network as your Home Assistant instance.
+- AirPrint discovery relies on the addon being on the same network segment as your devices (host networking is enabled).
+
+## Development
+
+### s6-overlay script conventions
+
+All executable scripts under `rootfs/etc/s6-overlay/s6-rc.d/` must follow two rules:
+
+1. **Shebang**: use `#!/usr/bin/with-contenv bashio`. This injects the container environment variables (stored by s6 in `/var/run/s6/container_environment/`) into the process before execution. `#!/usr/bin/env bashio` does **not** do this.
+2. **`exec` for longruns**: `run` scripts for `longrun` services must call their daemon with `exec` as the final command (e.g. `exec cupsd -f`). This replaces the bash process in-place so s6-supervise is attached to the daemon directly, ensuring correct signal delivery and restart behaviour.
+
+Oneshot `up` files should prefer a raw command or an explicit interpreter invocation such as `/usr/bin/with-contenv /bin/bash /usr/share/script.sh`. Avoid placing shell builtins directly in an `up` file; if the logic needs shell features, move it into a real shell script and call that script from the `up` file.
+
+## Acknowledgements
+
+This project was forked from [niallr/ha-cups-addon](https://github.com/niallr/ha-cups-addon) and significantly extended.
+
+The original cupsd.conf and Dockerfile were adapted from [lemariva/wifi-cups-server](https://github.com/lemariva/wifi-cups-server).
+
+Avahi and D-Bus configuration adapted from [marthoc/docker-homeseer](https://github.com/marthoc/docker-homeseer).

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CUPS Print Server</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f3f4f6;
+      color: #1f2937;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .icon-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 72px;
+      height: 72px;
+      background: #1d4ed8;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 14px rgba(29, 78, 216, 0.35);
+    }
+
+    .icon-wrap svg {
+      width: 40px;
+      height: 40px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    header p.subtitle {
+      color: #6b7280;
+      margin-top: 0.25rem;
+      font-size: 0.95rem;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+    }
+
+    .card h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card h2 svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: #6b7280;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .card p:last-child { margin-bottom: 0; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .btn:active { transform: scale(0.98); }
+
+    .btn svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .btn-primary {
+      background: #1d4ed8;
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: #1e40af; }
+
+    .btn-secondary {
+      background: #f3f4f6;
+      color: #374151;
+      border: 1px solid #e5e7eb;
+    }
+
+    .btn-secondary:hover { background: #e5e7eb; }
+
+    .url-display {
+      font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 0.75rem;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      padding: 0.4rem 0.75rem;
+      word-break: break-all;
+    }
+
+    .info-note {
+      font-size: 0.8rem;
+      color: #6b7280;
+      background: #eff6ff;
+      border-left: 3px solid #93c5fd;
+      border-radius: 0 6px 6px 0;
+      padding: 0.6rem 0.75rem;
+      margin-top: 0.75rem;
+      line-height: 1.5;
+    }
+
+    .link-list { list-style: none; }
+
+    .link-list li {
+      border-top: 1px solid #f3f4f6;
+      padding: 0.6rem 0;
+    }
+
+    .link-list li:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .link-list a {
+      color: #1d4ed8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .link-list a:hover { text-decoration: underline; }
+
+    .link-list a svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      opacity: 0.6;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 9V3h12v6M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/>
+          <rect x="6" y="14" width="12" height="7" rx="1"/>
+          <circle cx="18" cy="11.5" r="0.5" fill="#fff" stroke="#fff" stroke-width="1"/>
+        </svg>
+      </div>
+      <h1>CUPS Print Server</h1>
+      <p class="subtitle">Common UNIX Printing System</p>
+    </header>
+
+    <!-- Open CUPS Interface -->
+    <div class="card">
+      <h2>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        Open CUPS Web Interface
+      </h2>
+      <p>Access the CUPS administration panel to manage printers, print queues, and jobs on your local network.</p>
+      <a id="cups-link" href="#" class="btn btn-primary" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24">
+          <path d="M6 9V3h12v6M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/>
+          <rect x="6" y="14" width="12" height="7" rx="1"/>
+        </svg>
+        Open CUPS
+      </a>
+      <div class="url-display" id="cups-url-display">http://&hellip;:631</div>
+      <div class="info-note">Opens in a new tab &mdash; you must be on the same local network as your Home Assistant instance.</div>
+    </div>
+
+    <!-- Addon Settings -->
+    <div class="card">
+      <h2>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M4.93 19.07l1.41-1.41M19.07 19.07l-1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/>
+        </svg>
+        Change Addon Settings
+      </h2>
+      <p>Adjust the admin username &amp; password, default paper size, and log level in the Home Assistant addon configuration panel.</p>
+      <a id="settings-link" href="#" class="btn btn-secondary" target="_parent">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/>
+          <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>
+        </svg>
+        Open Addon Settings
+      </a>
+      <div class="info-note">Settings &rarr; Add-ons &rarr; CUPS Print Server &rarr; Configuration tab. Restart the addon after saving for changes to take effect.</div>
+    </div>
+
+    <!-- Why this page? -->
+    <div class="card">
+      <h2>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 8v4M12 16h.01"/>
+        </svg>
+        Why this page?
+      </h2>
+      <p>Home Assistant's sidebar uses an ingress proxy to embed addon web interfaces. The CUPS web interface uses authentication and redirect behaviour that isn't compatible with this proxy, so this page serves as a hub instead.</p>
+      <p>CUPS is still fully accessible on your local network at port 631 &mdash; use the button above to open it directly.</p>
+    </div>
+
+    <!-- Useful Links -->
+    <div class="card">
+      <h2>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+        </svg>
+        Useful Links
+      </h2>
+      <ul class="link-list">
+        <li>
+          <a id="cups-direct-link" href="#">
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            CUPS Web Interface (local network)
+          </a>
+        </li>
+        <li>
+          <a href="https://openprinting.github.io/cups/doc/overview.html" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            CUPS Documentation
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/peternicholls/ha-cups-addon" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+            Addon on GitHub
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <footer>CUPS Print Server &bull; <span id="version-text"></span></footer>
+
+  </div>
+
+  <script>
+    (function () {
+      var cupsUrl = 'http://' + window.location.hostname + ':631';
+      var settingsUrl = window.location.origin + '/hassio/addon/cups/config';
+
+      var cupsLink       = document.getElementById('cups-link');
+      var cupsDirectLink = document.getElementById('cups-direct-link');
+      var urlDisplay     = document.getElementById('cups-url-display');
+      var settingsLink   = document.getElementById('settings-link');
+      var versionText    = document.getElementById('version-text');
+
+      if (cupsLink)       cupsLink.href        = cupsUrl;
+      if (cupsDirectLink) cupsDirectLink.href  = cupsUrl;
+      if (urlDisplay)     urlDisplay.textContent = cupsUrl;
+      if (settingsLink)   settingsLink.href    = settingsUrl;
+
+      fetch('version.json').then(function (r) { return r.json(); }).then(function (d) {
+        if (versionText && d.version) versionText.textContent = 'v' + d.version;
+      }).catch(function () {});
+    })();
+  </script>
+</body>
+</html>

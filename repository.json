@@ -1,5 +1,5 @@
 {
-    "name": "CUPS HA Addon (x86 Compatible)",
-    "url": "https://github.com/niallr/ha-cups-addon",
-    "maintainer": "niallr"
+    "name": "CUPS HA Addon",
+    "url": "https://github.com/peternicholls/ha-cups-addon",
+    "maintainer": "peternicholls"
 }
